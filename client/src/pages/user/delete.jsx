@@ -17,9 +17,9 @@ function Delete(){
     }
     return (
         <div>
-             <button class='connect' style={{height:'100px',width:'100px'}} onClick={()=>{connect()}}>
+             {/* <button class='connect' style={{height:'100px',width:'100px'}} onClick={()=>{connect()}}>
 
-</button>
+</button> */}
              <input onChange={(e)=>{setcode(e.target.value)}} type="text" />
         <button onClick={handleDelete}>
 

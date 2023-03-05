@@ -6,17 +6,19 @@ import { useEffect } from "react";
 import { setDoc ,collection, addDoc, getDocs,getDoc, doc, updateDoc, deleteDoc ,onSnapshot,query,where} from "firebase/firestore";
 import { getPublicInfo } from "../../function/public.js";
 import { useStateContext } from "../../context/ind";
-function AdminDash(){
+import { useNavigate } from "react-router-dom";
+function AdminDash({display,setdisplay}){
     const [data,setdata]=useState([]);
     const [uuid,setuuid]=useState('');
+    const navigate=useNavigate();
     const [displayPrivate,setdisplayPrivate]=useState({});
       const { addPatient,getAllPatients,contract,getPatient,getPublicInfo } = useStateContext();
     var messageref = collection(database, `/users`);
     const handleOnHover = (result) => {
         // the item hovered
         console.log(result)
-      }
-      const [display,setdisplay]=useState({});
+    }
+   
       const handleFindPublicInfo = async (uid)=>{
      
         const obj=await getPublicInfo(uid);
@@ -57,6 +59,8 @@ function AdminDash(){
         // the item selected
         setuuid(item.uid);
         await handleFindPublicInfo(item.uid);
+        navigate('userInfo')
+        
         
        
        
@@ -107,13 +111,7 @@ function AdminDash(){
         
           
           </h1>
-          <input type="text" id='code-text-box' />
-          <button onClick={async()=>{ await handleFind(uuid,document.getElementById('code-text-box').value);}}>
-            hello
-          </button>
-          {
-            <a href={displayPrivate?.imageUrl}>hemlu</a>
-          }
+         
          
 
     </div>);

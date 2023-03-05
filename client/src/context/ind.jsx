@@ -1,5 +1,6 @@
 import React, { useContext, createContext } from 'react';
 import CryptoJS from "crypto-js";
+import crypto from 'crypto-js'
 import { useAddress, useContract, useMetamask, useContractWrite } from '@thirdweb-dev/react';
 
 
@@ -11,26 +12,27 @@ export const StateContextProvider = ({ children }) => {
  
     const address = useAddress();
     const connect = useMetamask();
-    const { contract } = useContract('0x00d9A3Eb626E5943aBD13252f6664D82A331a3Ed');
+    const { contract } = useContract('0x9661cf0d263e28c2264c4fbeBDaEC06CCbAeb27F');
     const { mutateAsync: addPatient } = useContractWrite(contract, 'addPatient');
 
     const { mutateAsync: delPatient } = useContractWrite(contract, 'delPatient');
   
 
-    const AddPatient=async (name,code,imageUrl,puuid,cuuid)=>{
+    const AddPatient=async (publicdata,privatedata,code,puuid,cuuid)=>{
         try{
-          const data={
-            
-            imageUrl:imageUrl,
-           
-          }
-          const public_data={
-            name:name,
-          
-            uid:puuid,
-          }
-          var publicText=JSON.stringify(public_data)
-          var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), code).toString();
+         var codee=publicdata.code
+         
+          var a=publicdata;
+          a.uid=puuid;
+          a.code='';
+
+          console.log(publicdata.code,'pleaseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
+
+         
+         
+          // const public_data=data;
+          var publicText=JSON.stringify(a)
+          var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(privatedata), codee).toString();
           console.log(ciphertext);
              await addPatient([ciphertext,publicText,puuid,cuuid])
 
@@ -49,18 +51,21 @@ export const StateContextProvider = ({ children }) => {
       console.log(patient);
       
       
-      var bytes  = CryptoJS.AES.decrypt(patient.info, code);
-      if(bytes.toString(CryptoJS.enc.Utf8)===''){
+      var bytes  = CryptoJS?.AES?.decrypt(patient.info, code);
+      
+      if(bytes.toString(CryptoJS?.enc?.Utf8)===''){
         // alert('invalid key')
         return '';
       }
       else{
-      var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+      var decryptedData = JSON.parse(bytes.toString(CryptoJS?.enc?.Utf8));
+      return decryptedData;
          }
+      
         
 
 
-      return decryptedData;
+    
     
     }
 
@@ -98,6 +103,33 @@ export const StateContextProvider = ({ children }) => {
 
       
     
+    }
+    const addReport =async(uuid,code,rdata)=>{
+      console.log('yjgccccccccccccccccccccccccccccccccccccccccccccccccccccccccc');
+      var data= await getPatient(uuid,code);
+      if(data===''){
+        alert('invalid key')
+        return;
+      }
+      if(data.pastReports){
+        data.pastReports.push(rdata);
+      }
+      else{
+        data.pastReports=[rdata];
+
+      }
+      console.log(data);
+
+
+
+      await AddPatient(data,code,uuid,uuid);
+      
+     
+     
+      // return data;
+     
+
+
     }
     
 
@@ -145,7 +177,8 @@ export const StateContextProvider = ({ children }) => {
             getPatient:getPatient,
             deletePatient:deletePatient,
             getMembers:getMembers,
-            getPublicInfo:getPublicInfo
+            getPublicInfo:getPublicInfo,
+            addReport:addReport
            
           }}
         >

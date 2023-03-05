@@ -27,6 +27,8 @@ contract EMr {
 
 
      }
+
+     
      
      function getPatient(string memory uid) view public returns (
         Patient memory
