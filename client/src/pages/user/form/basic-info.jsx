@@ -1,31 +1,36 @@
 import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import React, { useState } from "react";
 import "./form.css";
-const bg=['A +','A -','B+','B -','AB +','AB -','O +','O -'];
+const bg=['A+','A-','B+','B-','AB+','AB-','O+','O-'];
 function BasicInfo({publicdata,setpublicdata,member}) {
     const [bgIndex,setBgIndex]=useState(0);
     console.log(publicdata);
   return (
     <div
+    class='container'
       style={{
-        height: "60vh",
-        margin: "10%",
-        display: "flex",
-        justifyContent: "space-around",
-        alignItems: "space-around",
+
+        height: "70vh",
+        // margin: "10%",
+        alignItems:'center',
         flexDirection: "column",
+        overflow:'auto'
+
       }}
     >
+       
       <div>
-        <h2 class="label">Name</h2>
+        <h2 class="label" >Name</h2>
         <TextField
           inputProps={{
             style: {
-              height: "30px",
-              width: "35vw",
-              fontSize: "20px",
+                height: "30px",
+                width: "35vw",
+                fontSize: "20px",
+             
             },
           }}
+          className='textfield'
           id="standard-basic"
           label="Name"
           variant="standard"
@@ -37,11 +42,13 @@ function BasicInfo({publicdata,setpublicdata,member}) {
         <TextField
           inputProps={{
             style: {
-              height: "30px",
-              width: "35vw",
-              fontSize: "20px",
+                height: "30px",
+                width: "35vw",
+                fontSize: "20px",
+               
             },
           }}
+          className='textfield'
           id="standard-basic"
           label="Enter Code"
           variant="standard"
@@ -60,8 +67,10 @@ member?
               height: "30px",
               width: "35vw",
               fontSize: "20px",
+             
             },
           }}
+          className='textfield'
           id="standard-basic"
           label="Relation"
           variant="standard"
@@ -82,11 +91,13 @@ null
         <TextField
           inputProps={{
             style: {
-              height: "30px",
-              width: "35vw",
-              fontSize: "20px",
+                height: "30px",
+                width: "35vw",
+                fontSize: "20px",
+                
             },
           }}
+          className='textfield'
           id="standard-basic"
           label="Email"
           variant="standard"
@@ -97,7 +108,7 @@ null
       <div>
         <h2 class="label">Upload Your Photo</h2>
         <div class="mb-3">
-          <input class="form-control" type="file" id="formFile" />
+          <input class="form-control" type="file" id="formFile" onChange={(e)=>{var a=publicdata;a.profile=e.target.files;setpublicdata({...a})}} />
         </div>
       </div>
 

@@ -14,14 +14,14 @@ function Sidebar(){
     console.log(user);
     return (
 
-        <motion.div  onHoverEnd={()=>{setshow(0);}} onHoverStart={()=>{setshow(1)}} whileHover={{width:'14%'}} style={{height:'100vh' ,width:'4vw',backgroundColor:'#0ad0b2',flexDirection:'column',display:'flex',justifyContent:"space-between"}}>
+        <motion.div  onHoverEnd={()=>{setshow(0);}} onHoverStart={()=>{setshow(1)}} whileHover={{width:'17%'}} style={{height:'100vh' ,width:'4vw',backgroundColor:'#0ad0b2',flexDirection:'column',display:'flex',justifyContent:"space-between"}}>
                 <div class="profile d-flex" style={{height:'50px'}}>
                     {
                         show?
                         <motion.div class='d-flex' >
                             
                             <FontAwesomeIcon  icon={faUser} style={{marginTop:'15px'}} />
-                            <motion.h1 onClick={logout} animate={{x:0}} initial={{x:'-100px'}} transition={{duration:0.3}} exit={{x:'-100px'}} >{user.name}</motion.h1>
+                            <motion.h1 onClick={()=>{logout({returnTo:'https://meddvault.netlify.app/'})}} animate={{x:0}} initial={{x:'-100px'}} transition={{duration:0.3}} exit={{x:'-100px'}} >{user.name}</motion.h1>
                         </motion.div>
                         
                         
@@ -39,7 +39,7 @@ function Sidebar(){
                            <div><FontAwesomeIcon   icon={faPen} /></div>
                            {
                             show?
-                            <motion.h4 style={{marginLeft:'1vh'}} animate={{x:0}} initial={{x:'-100px'}} transition={{duration:0.3}} exit={{x:'-100px'}}>write</motion.h4>
+                            <motion.h4 style={{marginLeft:'1vh'}} animate={{x:0}} initial={{x:'-100px'}} transition={{duration:0.3}} exit={{x:'-100px'}}>DashBoard</motion.h4>
                              :null
                            }
                     </div>
@@ -48,7 +48,7 @@ function Sidebar(){
 
                        
                     }
-                     {
+                     {/* {
                          <div class='d-flex' style={{height:'50px',marginLeft:'1vw'}} onClick={()=>navigate('read')} >
                          <div><FontAwesomeIcon   icon={faSearch} /></div>
                          {
@@ -57,7 +57,7 @@ function Sidebar(){
                            :null
                          }
                   </div>
-                    }
+                    } */}
                     {
                         <div class='d-flex' style={{height:'50px',marginLeft:'1vw'}} onClick={()=>navigate('addmember')} >
                         <div><FontAwesomeIcon   icon={faAdd} /></div>

@@ -3,17 +3,16 @@ import React from "react";
 const steps = [
     {
       label: 'Basic Information',
-      description: `For each o show on, and more.`,
+      description: `Add your basic info and code (this information would be public).`,
     },
     {
       label: 'Contact Information',
       description:
-        'An ad group contains one or more ads which target a shared set of keywords.',
+        'Add contact information (Private)',
     },
     {
       label: 'Past Medical History',
-      description: `Try out different ad text to see what brings in the most customers,
-                and learn how to enhance your a.`,
+      description: `Add your Past Medical History (Private).`,
     },
     
   ];
@@ -77,3 +76,4 @@ function FormBar({member,activeStep,setActiveStep,handleAddUser,handleAddMember}
 
 }
 export default FormBar;
+

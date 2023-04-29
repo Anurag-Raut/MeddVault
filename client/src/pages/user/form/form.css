@@ -1,5 +1,6 @@
 .label{
-   margin-bottom: 20px; 
+   margin-bottom: 15px;
+   margin-top: 50px; 
 }
 .container {
     -ms-overflow-style: none;  /* Internet Explorer 10+ */
@@ -7,4 +8,7 @@
 }
 .container::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
+}
+.textfield{
+    margin: 60px;
 }

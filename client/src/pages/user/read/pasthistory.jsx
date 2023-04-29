@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import React from "react";
 const dis = [
     "Cancer",
@@ -76,9 +76,29 @@ function FamilyMedHistory({data,handleFind,setCode}){
            
 
 
-        <input onChange={(e)=>{setCode(e.target.value)}} type="text" />
+            <div>
+        <h2 class="label">Code </h2>
+        <TextField
+          inputProps={{
+            style: {
+              height: "30px",
+              width: "35vw",
+              fontSize: "20px",
+            },
+          }}
+          id="code-box"
+          label="Code"
+          variant="standard"
+          onChange={(e)=>{setCode(e.target.value)}}
+         
+         
+        />
+      </div>
+
+
         
-        <button  type="submit" style={{height:'40px',width:'40px'}}></button>
+        
+        <button  class="btn btn-primary" type="submit" style={{marginTop:'30px'}}>Submit code</button>
             
         </form> 
         }

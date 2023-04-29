@@ -2,6 +2,10 @@ import { TextField } from "@mui/material";
 import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import './form.css';
+import { red } from "@mui/material/colors";
+import { motion } from "framer-motion";
+// import {faPlus} from "https://fontawesome.com/icons/plus?s=solid&f=sharp;"
 function ContactInfo({privatedata,setprivatedata}){
     console.log(privatedata);
     const dummy=useRef();
@@ -14,13 +18,15 @@ function ContactInfo({privatedata,setprivatedata}){
             dummy.current.scrollIntoView({ behavior: "smooth" });
           }, [emergencyContact]);
         console.log(emergencyContact);
+
+        const [rotate, setRotate] = React.useState(false);
         return (
 
             <div
       style={{
         
         height: "70vh",
-        margin: "10%",
+        // margin: "10%",
         display: "flex",
         justifyContent: "space-around",
         alignItems: "space-around",
@@ -49,7 +55,7 @@ function ContactInfo({privatedata,setprivatedata}){
         
 
         
-        
+
         {
             emergencyContact?.map(({val,relation},index)=>{
                 return (
@@ -72,8 +78,8 @@ function ContactInfo({privatedata,setprivatedata}){
         
 
         </div>
-        <FontAwesomeIcon icon={faTrash} onClick={()=>{var a=emergencyContact;a.splice(index, 1);setEC([...a])
-}} />
+          <FontAwesomeIcon icon={faTrash} onClick={()=>{var a=emergencyContact;a.splice(index, 1);setEC([...a])}} />
+          
 
                     </div>
                     
@@ -83,9 +89,16 @@ function ContactInfo({privatedata,setprivatedata}){
             })
             
         }
-        <div id="addEC" ref={dummy} onClick={()=>{console.log('hi');var a=emergencyContact;a.push({val:"",relation:''});setEC([...a]);}}>
-            add contact
-        </div>
+        
+        <motion.div id="addEC" ref={dummy} onClick={()=>{console.log('hi');var a=emergencyContact;a.push({val:"",relation:''});setEC([...a]);}}
+            className="box"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            >
+           <h5> + Add contact </h5>
+        </motion.div>
+           {/* <FontAwesomeIcon icon={faPlus} ref={dummy} onClick={()=>{console.log('hi');var a=emergencyContact;a.push({val:"",relation:''});setEC([...a]);}}/> */}
       </div>
       
      
@@ -96,3 +109,4 @@ function ContactInfo({privatedata,setprivatedata}){
 
 }
 export default ContactInfo;
+

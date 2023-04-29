@@ -12,7 +12,7 @@ export const StateContextProvider = ({ children }) => {
  
     const address = useAddress();
     const connect = useMetamask();
-    const { contract } = useContract('0x9661cf0d263e28c2264c4fbeBDaEC06CCbAeb27F');
+    const { contract } = useContract('0x587586E033AC8Bc057D3f3B6814943D8a74DB2aa');
     const { mutateAsync: addPatient } = useContractWrite(contract, 'addPatient');
 
     const { mutateAsync: delPatient } = useContractWrite(contract, 'delPatient');
@@ -28,7 +28,7 @@ export const StateContextProvider = ({ children }) => {
 
           console.log(publicdata.code,'pleaseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
 
-         
+          console.log(publicdata,privatedata,codee);
          
           // const public_data=data;
           var publicText=JSON.stringify(a)
@@ -70,11 +70,16 @@ export const StateContextProvider = ({ children }) => {
     }
 
     const getPublicInfo = async(uid)=>{
-      const patient = await contract.call('getPatient',uid);
+      console.log('waterrr',uid)
+      const patient = await contract?.call('getPatient',uid);
+      console.log('bottle')
       
-      console.log(patient);
-      if(patient.public_info!==''){
-        var a=JSON.parse(patient.public_info)
+      console.log(patient,'bottle patient');
+      if(!patient){
+        return '';
+      }
+      if(patient?.public_info!==''){
+        var a=JSON.parse(patient?.public_info)
         return a;}
 
       else{
@@ -118,11 +123,13 @@ export const StateContextProvider = ({ children }) => {
         data.pastReports=[rdata];
 
       }
+      var public_data=await getPublicInfo(uuid);
+      public_data.code=code;
       console.log(data);
 
 
 
-      await AddPatient(data,code,uuid,uuid);
+      await AddPatient(public_data,data,code,uuid,uuid);
       
      
      
@@ -133,23 +140,29 @@ export const StateContextProvider = ({ children }) => {
     }
     
 
-    const deletePatient=async(code)=>{
+    const deletePatient=async(uid,code)=>{
       try{
 
-        const patient = await contract.call('getPatient',code);
+        const patient = await contract.call('getPatient',uid);
       
+        var bytes  = CryptoJS?.AES?.decrypt(patient.info, code);
+      
+      if(bytes.toString(CryptoJS?.enc?.Utf8)===''){
+        
+        return '';
+      }
+      else{
+        await delPatient([uid])
+        return 1;
+         }
       
         
         
-        var bytes  = CryptoJS.AES.decrypt(patient.info, code);
-        if(bytes.toString(CryptoJS.enc.Utf8)===''){
+       
+        
+     
          
-          return code;
-        }
-        else{
-          await delPatient([code])
-          return 1;
-           }
+           
 
       
       }

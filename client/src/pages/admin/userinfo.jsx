@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useStateContext } from "../../context/ind";
+import ReadContent from "../user/readcontent";
+import AddReport from "./addReport";
 
 function UserInfo({data}){
-    const { addPatient,getAllPatients,contract,getPatient,getPublicInfo,addReport } = useStateContext();
+    const { addPatient,getAllPatients,contract,getPatient,getPublicInfo,addReport,connect } = useStateContext();
     const [displayPrivate,setdisplayPrivate]=useState({});
+    
     const handleFind = async (uid,code)=>{
      
         // console.log(uid,'dsvsv')
@@ -16,29 +19,33 @@ function UserInfo({data}){
         // setdisplay(obj);
     }
     console.log(data,'dataaaa');
+    const [selected,setselected]=useState(0);
 
     return (
-        <div>
+        <div style={{width:'100vw',height:'100vh',display:"flex"}} >
+             
+        <div id='rem-div' style={{width:'14vw',height:'100vh',backgroundColor:"#0ad0b2",display:'flex',flexDirection:'column',justifyContent:"space-around"}}>
+            <h5 onClick={()=>setselected(0)}>
+                Read
+            </h5>
+            <h5 onClick={()=>setselected(1)} >
+                add report
+            </h5>
             
-        <input type="text" id='code-text-box' placeholder="enter code" />
-        <button onClick={async()=>{ await handleFind(data.uid,document.getElementById('code-text-box').value);}}>
-          get details
-        </button>
-        {
-            displayPrivate?.imageURL?
-            <div>
-                 <h1>{data?.name}</h1>
-          <a target="_blank" href={displayPrivate?.imageURL} >document</a>
-            </div>
-           
-          :
-          null
+            <button onClick={connect}>
+            connect
+            </button>
 
-        }
-
-            {/* <button onClick={async()=>{ await addReport(data.uid,document.getElementById('code-text-box').value,'hemlu')}}> */}
-
-            {/* </button> */}
+            
+                
+            
+            </div>  
+    
+            
+            {selected===0?<ReadContent member={1} muid={data.uid} />
+    :
+    <AddReport uid={data.uid}/>
+    }
 
         </div>
        

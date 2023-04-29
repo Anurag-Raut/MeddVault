@@ -43,9 +43,9 @@ contract EMr {
 
      }
 
-     function delPatient(string memory code)  public{
+     function delPatient(string memory uid )  public{
       Patient memory currPat ;
-         PMap[code]=currPat;
+         PMap[uid]=currPat;
 
      }
 

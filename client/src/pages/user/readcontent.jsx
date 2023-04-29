@@ -15,6 +15,8 @@ import Bar from "./read/bar";
 import Basicinfo from "./read/bacsicInfo";
 import Contactinfo from "./read/contactindo";
 import FamilyMedHistory from "./read/pasthistory";
+import PastRecords from "./read/pastReports";
+
 async function getdoc(docRef) {
     const docSnap = await getDoc(docRef);
     return docSnap;
@@ -34,16 +36,21 @@ function ReadContent({member,muid}){
     const [uid,setuuid]=useState('');
     const [activeStep,setActiveStep]=useState(0);
     useEffect(()=>{
-       if(member===0){
-        const docRf = doc(database, "users", `${user?.sub?.substring(14)}`);
-        getdoc(docRf).then((df)=>{
-        //   console.log(df.data());
-        var id=df?.data()?.uid?df?.data()?.uid:null;
-          setuuid(df?.data()?.uid);
-            if(id){
-            handleFindPublicInfo(id);}
+       if(member){
+        
+        
+}
+else{
+    const docRf = doc(database, "users", `${user?.sub?.substring(14)}`);
+    getdoc(docRf).then((df)=>{
+    //   console.log(df.data());
+    var id=df?.data()?.uid?df?.data()?.uid:null;
+      setuuid(df?.data()?.uid);
+        if(id){
+        handleFindPublicInfo(id);}
+
+    })
     
-        })
 }
 
       },[])
@@ -95,7 +102,7 @@ function ReadContent({member,muid}){
         <div style={{color:'black',display:'flex',width:'100%'}}>
             <Bar member={member} activeStep={activeStep} setActiveStep={setActiveStep} />
 
-            <div style={{backgroundColor:'wheat',display:'flex',flex:1}} >
+            <div style={{backgroundColor:'white',display:'flex',flex:1}} >
 
         {
             activeStep===0?
@@ -109,6 +116,10 @@ function ReadContent({member,muid}){
             <FamilyMedHistory member={member} data={privatedisplay} handleFind={handleFind} setCode={setCode} />
 
             :
+            activeStep===3?
+            <PastRecords data={privatedisplay} handleFind={handleFind} setCode={setCode} />
+            :
+
             null
 
             
