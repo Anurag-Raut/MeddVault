@@ -1,8 +1,8 @@
-import { TextField } from "@mui/material";
+import { input } from "@mui/material";
 import React from "react";
-
+import { motion } from "framer-motion";
 function PastRecords({ data, handleFind, setCode }) {
-  console.log(data);
+
   return (
     <div>
     {
@@ -21,30 +21,32 @@ function PastRecords({ data, handleFind, setCode }) {
         class="container"
         style={{ overflowX: "auto", MaxHeight: "50vh", width: "45vw" }}
       >
-        <h1 class="label"> Past Records Info</h1>
+        <h1 class="font-bold text-4xl"> Past Records Info : </h1>
 
         {data?.pastReports?.map((n, index) => {
           return (
             <div
-              class="d-flex"
+              class=""
               style={{
                 justifyContent: "space-between",
                 alignItems: "center",
                 marginTop: "30px",
+                marginBottom: "40px",
               }}
             >
-              <div style={{ marginBottom: "50px" }}>
-                <h3 class="label"> Reason</h3>
-                <h3>{n?.reason}</h3>
-              </div>
-              <div style={{ marginBottom: "50px" }}>
-                <h3 class="label"> Diagnosis</h3>
-                <h3>{n?.diagnosis}</h3>
-              </div>
-              <div style={{ marginBottom: "50px" }}>
-                <h3 class="label"> Date</h3>
-                <h3>{n?.appDate}</h3>
-              </div>
+              <h2 style={{marginLeft:'-10px'}}>{`${index+1})`}</h2>
+              <div  class='flex items-center mb-5 '>
+        <h2 class=" font-bold text-4xl ">Reason : </h2>
+          <h3 class=' ml-5 text-4xl'>{n?.reason}</h3>
+        </div>
+        <div  class='flex items-center mb-5 '>
+        <h2 class=" font-bold text-4xl ">Diagnosis : </h2>
+          <h3 class=' ml-5 text-4xl'>{n?.diagnosis}</h3>
+        </div>
+        <div  class='flex items-center mb-5 '>
+        <h2 class=" font-bold text-4xl ">Date : </h2>
+          <h3 class=' ml-5 text-4xl'>{n?.appDate}</h3>
+        </div>
             </div>
           );
         })}
@@ -59,8 +61,10 @@ function PastRecords({ data, handleFind, setCode }) {
 
 
         <div>
-        <h2 class="label">Code </h2>
-        <TextField
+        <h2 class="label font-bold text-3xl ">Code :</h2>
+        <div class=" ml-7 max-w-sm blackflex items-center border-b border-teal-500 py-2">
+          <input
+            class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
           inputProps={{
             style: {
               height: "30px",
@@ -75,12 +79,22 @@ function PastRecords({ data, handleFind, setCode }) {
          
          
         />
+        </div>
       </div>
 
-
         
         
-        <button  class="btn btn-primary" type="submit" style={{marginTop:'30px'}} > Submit code</button>
+      <motion.button
+            type="button"
+            className=" font-bold hover:text-white  h-[50px] border-2   border-solid border-teal-400 hover:bg-teal-400  mt-10 text-teal-300   w-[100px] rounded-full"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.9 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            onClick={handleFind}
+          
+          >
+            Submit
+          </motion.button>
         
     </form> 
     }

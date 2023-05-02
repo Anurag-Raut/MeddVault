@@ -9,6 +9,6 @@
 .container::-webkit-scrollbar { 
     display: none;  /* Safari and Chrome */
 }
-.textfield{
+.input{
     margin: 60px;
 }

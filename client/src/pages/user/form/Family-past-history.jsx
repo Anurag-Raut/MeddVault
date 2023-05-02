@@ -35,9 +35,31 @@ function FamMedHistory(){
             <h3>Add Family Medical History</h3>
 
             <div style={{ width: "100%",marginBottom:'50px' }}>
-        <h2 style={{  }}>Select Disease</h2>
-
-        <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
+        <h2 >Select Disease</h2>
+        <div class="grid grid-cols-4 gap-4">
+        {dis.map((p, index) => {
+          
+            return (
+              <div >
+                <input
+                  style={{ width: "50px" }}
+                  type="checkbox"
+                  class="btn-check"
+                  id={`btn-check-outlined${index}`}
+                  autocomplete="off"
+                />
+                <label
+                  class="btn btn-outline-primary"
+                  for={`btn-check-outlined${index}`}
+                >
+                  {p}
+                </label>
+                <br />
+              </div>
+            );
+          })}
+</div>
+        {/* <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 1, md: 1 }}>
           {dis.map((p, index) => {
             return (
               <Grid item xs={4}>
@@ -58,7 +80,7 @@ function FamMedHistory(){
               </Grid>
             );
           })}
-        </Grid>
+        </Grid> */}
       </div>
       <div style={{width: "100%"}}>
         <h2 style={{ marginBottom: "50px" }}>Add Extra Information</h2>
@@ -69,7 +91,7 @@ function FamMedHistory(){
                 <div>
                   <div>
                     <h3 class="label">Enter the name of Disease</h3>
-                    <TextField
+                    <input
                       inputProps={{
                         style: {
                           height: "30px",
@@ -81,7 +103,7 @@ function FamMedHistory(){
                       label="Name"
                       variant="standard"
                       onChange={(e) => {
-                        console.log(e.target.value);
+                      
                         var a = pastData;
                         a[index].name = e.target.value;
                         setpastData([...a]);
@@ -90,7 +112,7 @@ function FamMedHistory(){
                   </div>
                   <div>
                     <h3 class="label">Are You Still Suffering from it?</h3>
-                    <FormControl sx={{ m: 1, minWidth: 120 }}>
+                    {/* <FormControl sx={{ m: 1, minWidth: 120 }}>
                       <InputLabel id="demo-simple-select-helper-label">
                         ?
                       </InputLabel>
@@ -116,7 +138,7 @@ function FamMedHistory(){
                         </MenuItem>
                         <MenuItem
                           onClick={() => {
-                            console.log("No");
+                         
                             var a = pastData;
                             a[index].suff = "No";
                             setpastData([...a]);
@@ -126,7 +148,7 @@ function FamMedHistory(){
                           {"No"}
                         </MenuItem>
                       </Select>
-                    </FormControl>
+                    </FormControl> */}
                   </div>
                 </div>
                 <FontAwesomeIcon icon={faTrash} onClick={()=>{var a=pastData;a.splice(index, 1);setpastData([...a])}}/>

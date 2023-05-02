@@ -2,6 +2,11 @@ import { defaultAbiCoder } from "ethers/lib/utils";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useStateContext } from "../../context/ind";
+import { ConnectWallet } from "@thirdweb-dev/react";
+import { useAuth0 } from "@auth0/auth0-react";
+// import { user } from "firebase-functions/v1/auth";
+import Avatar from "react-avatar";
+
 function RightPanel({uid,update,setmuid,parray,setparray}){
     const {
         addPatient,
@@ -14,7 +19,7 @@ function RightPanel({uid,update,setmuid,parray,setparray}){
    
     const [memberids, setmemberids] = useState([]);
     const { connect, address } = useStateContext();
-    
+    const { loginWithRedirect, isAuthenticated, user, logout } = useAuth0();
     const handleGetMemebers = async () => {
         // var code = document.getElementById("code-text").value;
       
@@ -27,24 +32,29 @@ function RightPanel({uid,update,setmuid,parray,setparray}){
           setmemberids(res?.patient);
         });
     
-        console.log(parray,'parray');
+  
       };
 
       useEffect(()=>{
-        console.log('hello');
+  
         if(uid){
             handleGetMemebers();}
       },[update])
       useEffect(()=>{
-        console.log('hello');
+  
         if(uid){
             handleGetMemebers();}
       },[uid]);
       useEffect(()=>{
-        console.log('hello');
+
         if(uid){
             handleGetMemebers();}
       },[address])
+      useEffect(()=>{
+
+        if(uid){
+            handleGetMemebers();}
+      },[user])
       setTimeout(()=>{
         if(parray===[]){
         handleGetMemebers();}
@@ -55,15 +65,16 @@ function RightPanel({uid,update,setmuid,parray,setparray}){
     return (
         <div style={{height:'100vh',width:'15vw',backgroundColor:'black',display:'flex',flexDirection:'column',justifyContent:'space-between',alignItems:'center'}}>
             <div style={{marginTop:'20px'}}>
-            <button type="button" class="btn btn-primary" onClick={()=>{connect();console.log(address,'segef')}}>Connect to Wallet</button>
+            <ConnectWallet dropdownPosition={{ side: 'bottom', align: 'center'}} />
             </div>
-            <div style={{height:'40vh'}} >
-                <h1>
+            <h1 class='font-bold text-3xl'>
                     Members
                 </h1>
+            <div style={{height:'40vh'}} >
+                
             {
                 parray.map((p,index)=>{
-                    return(<Link to='member'> <h2 onClick={()=>{setmuid(memberids[index])}} style={{marginTop:'5vh'}}>{p.name}</h2> </Link> )
+                    return(<Link to='member'> <h2 onClick={()=>{setmuid(memberids[index])}} style={{marginTop:'5vh'}}> <div class='w-[10vw] flex justify-between'>  <Avatar style={{marginLeft:'5px'}} size="2.5vw" round={true} name={p.name} /> <span class='font-bold text-2xl'> { p.name}</span></div></h2> </Link> )
 
                 })
             }

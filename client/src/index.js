@@ -14,7 +14,7 @@ import Select from "./Select";
 import LoggedInUser from "./pages/user/loggedIn";
 import Admin from "./pages/admin/admin";
 import "./main.css";
-
+import { ToastContainer, toast } from 'react-toastify';
 const root = ReactDOM.createRoot(document.getElementById("root"));
   function change(){
     
@@ -27,7 +27,7 @@ root.render(
       redirect_uri: window.location.href,
     }}
   >
-    <ThirdwebProvider desiredChainId={ChainId.Goerli}>
+    <ThirdwebProvider activeChain={'mumbai'}>
       <Router>
         <StateContextProvider>
           {/* <Routes>
@@ -51,7 +51,9 @@ root.render(
             <Route path="/user/*" element={<LoggedInUser  />} />
             <Route path="/admin/*" element={<Admin  />} />
           </Routes> */}
+        
           <App/>
+         <ToastContainer/> 
         </StateContextProvider>
       </Router>
     </ThirdwebProvider>

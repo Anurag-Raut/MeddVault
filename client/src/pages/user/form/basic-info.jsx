@@ -1,138 +1,143 @@
-import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import React, { useState } from "react";
 import "./form.css";
-const bg=['A+','A-','B+','B-','AB+','AB-','O+','O-'];
-function BasicInfo({publicdata,setpublicdata,member}) {
-    const [bgIndex,setBgIndex]=useState(0);
-    console.log(publicdata);
+const bg = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+function BasicInfo({ publicdata, setpublicdata, member }) {
+  const [bgIndex, setBgIndex] = useState(0);
+
   return (
     <div
-    class='container'
+      class="container"
       style={{
-
         height: "70vh",
+        width:"40vw",
         // margin: "10%",
-        alignItems:'center',
+        alignItems: "center",
         flexDirection: "column",
-        overflow:'auto'
-
+        overflow: "auto",
       }}
     >
-       
-      <div>
-        <h2 class="label" >Name</h2>
-        <TextField
-          inputProps={{
-            style: {
-                height: "30px",
-                width: "35vw",
-                fontSize: "20px",
-             
-            },
-          }}
-          className='textfield'
-          id="standard-basic"
-          label="Name"
-          variant="standard"
-          onChange={(e)=>{var a=publicdata;a.name=e.target.value;setpublicdata({...a})}}
-        />
+      <div class="mb-4">
+        <label
+          for="first_name"
+          class="block text-4xl mb-3  font-medium text-gray-900 dark:text-black "
+        >
+          Name
+        </label>
+        <div class="  ml-7 max-w-sm blackflex items-center border-b border-teal-500 py-2">
+          <input
+            class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+            type="text"
+            placeholder="Enter Your Name"
+            aria-label="Full name"
+            onChange={(e) => {
+              var a = publicdata;
+              a.name = e.target.value;
+              setpublicdata({ ...a });
+            }}
+          />
+        </div>
       </div>
-      <div>
-        <h2 class="label">code</h2>
-        <TextField
-          inputProps={{
-            style: {
-                height: "30px",
-                width: "35vw",
-                fontSize: "20px",
-               
-            },
-          }}
-          className='textfield'
-          id="standard-basic"
-          label="Enter Code"
-          variant="standard"
-          onChange={(e)=>{var a=publicdata;a.code=e.target.value;setpublicdata({...a})}}
-        />
-      </div>
-
-
-{
-member?
-<div>
-        <h2 class="label">Relation</h2>
-        <TextField
-          inputProps={{
-            style: {
-              height: "30px",
-              width: "35vw",
-              fontSize: "20px",
-             
-            },
-          }}
-          className='textfield'
-          id="standard-basic"
-          label="Relation"
-          variant="standard"
-          onChange={(e)=>{var a=publicdata;a.relation=e.target.value;setpublicdata({...a})}}
-        />
-      </div>
-
-:
-null
-
-
-
-
-}
-
-      <div>
-        <h2 class="label">Email</h2>
-        <TextField
-          inputProps={{
-            style: {
-                height: "30px",
-                width: "35vw",
-                fontSize: "20px",
-                
-            },
-          }}
-          className='textfield'
-          id="standard-basic"
-          label="Email"
-          variant="standard"
-          onChange={(e)=>{var a=publicdata;a.email=e.target.value;setpublicdata({...a})}}
-        />
-      </div>
-
-      <div>
-        <h2 class="label">Upload Your Photo</h2>
-        <div class="mb-3">
-          <input class="form-control" type="file" id="formFile" onChange={(e)=>{var a=publicdata;a.profile=e.target.files;setpublicdata({...a})}} />
+      <div class="mb-4">
+        <label
+          for="first_name"
+          class="block text-3xl mb-3  font-medium text-gray-900 dark:text-black"
+        >
+          Code
+        </label>
+        <div class=" ml-7 max-w-sm blackflex items-center border-b border-teal-500 py-2">
+          <input
+            class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+            type="password"
+            placeholder="Enter Secret Code"
+            aria-label="Full name"
+            onChange={(e) => {
+              var a = publicdata;
+              a.code = e.target.value;
+              setpublicdata({ ...a });
+            }}
+          />
         </div>
       </div>
 
-      <div>
-        <h2 class="label">Select Your Blood Group</h2>
-        <FormControl sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-helper-label">Age</InputLabel>
-        <Select
-          labelId="demo-simple-select-helper-label"
-          id="demo-simple-select-helper"
-          value={bg[bgIndex]}
-          label="Age"
-              
+      {member ? (
+        <div class="mb-4">
+          <label
+            for="first_name"
+            class="block text-4xl mb-3  font-bold text-gray-900 dark:text-black"
+          >
+            Relation
+          </label>
+          <div class="ml-7 max-w-sm blackflex items-center border-b border-teal-500 py-2">
+            <input
+              class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+              type="password"
+              placeholder="Enter Relation with Member"
+              aria-label="Full name"
+              onChange={(e) => {
+                var a = publicdata;
+                a.relation = e.target.value;
+                setpublicdata({ ...a });
+              }}
+            />
+          </div>
+        </div>
+      ) : null}
+
+      <div class="mb-4">
+        <label
+          for="first_name"
+          class="block text-4xl mb-3  font-medium text-gray-900 dark:text-black"
         >
-        
-          {
-            bg.map((p,index)=>{
-                return (<MenuItem onClick={()=>{var a=publicdata;a.bloodgroup=p;setpublicdata({...a});setBgIndex(index)}} value={p}>{p}</MenuItem>)
-            })
-          }
-        </Select>
-        
-      </FormControl>
-     
+          Email
+        </label>
+        <div class="ml-7 max-w-sm blackflex items-center border-b border-teal-500 py-2">
+          <input
+            class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+            type="text"
+            placeholder="Enter Your Email"
+            aria-label="Full name"
+            onChange={(e) => {
+              var a = publicdata;
+              a.email = e.target.value;
+              setpublicdata({ ...a });
+            }}
+          />
+        </div>
+      </div>
+
+
+      <div>
+      <label
+          for="first_name"
+          class=" mb-4 block text-4xl mb-3  font-medium text-gray-900 dark:text-black"
+        >
+          Select Your Blood Group
+        </label>
+        <div class=" w-50 flex justify-between ">
+
+        <label
+          for="countries"
+          class=" text-xl block mb-2  font-medium text-gray-900 dark:text-black"
+        >
+          Select an option
+        </label>
+        <select
+          onChange={(e) => {
+            var a = publicdata;
+            a.bloodgroup = e.target.value;
+            setpublicdata({ ...a });
+          }}
+          id="countries"
+          class="bg-gray-50 w-[100px] border border-gray-300 text-gray-900 text-l rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        >
+          {bg.map((p, index) => {
+            return <option selected>{p}</option>;
+          })}
+        </select>
+
+        </div>
+
         
       </div>
     </div>

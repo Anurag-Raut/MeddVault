@@ -33,6 +33,7 @@ import {
   where,
 } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
+import { ToastContainer, toast } from "react-toastify";
 async function getdoc(docRef) {
     const docSnap = await getDoc(docRef);
     return docSnap;
@@ -47,7 +48,7 @@ function Form({member,setupdate,update,setisread}){
         getMembers,
         getPublicInfo,
       } = useStateContext();
-    const [publicdata,setpublicdata]=useState({})
+    const [publicdata,setpublicdata]=useState({bloodgroup:"NA"})
     const [privatedata,setprivatedata]=useState({})
     const [activeStep, setActiveStep] = React.useState(0);
     const [push,setpush]=useState(0);
@@ -56,7 +57,7 @@ const [uid, setuuid] = useState("");
   useEffect(() => {
     const docRf = doc(database, "users", `${user?.sub?.substring(14)}`);
     getdoc(docRf).then((df) => {
-      console.log(df.data());
+    
       setuuid(df?.data()?.uid);
     });
   }, []);
@@ -81,11 +82,10 @@ async function setdoc(id, uid) {
   }
 
 
-  console.log(uid);
   
 
   async function check(uuid) {
-    console.log(uuid);
+  
     const obj = await getPublicInfo(uuid);
     // console.log(obj);
     // setdisplay(obj);
@@ -97,7 +97,7 @@ async function setdoc(id, uid) {
 
     
     var a = await check(uuid);
-    // console.log(a);
+    console.log(a);
     if (a === "") {
     } else {
       alert("data already exist");
@@ -108,13 +108,13 @@ async function setdoc(id, uid) {
     // const rootCid = await client.put(fileInput.files);
     // const imageURL =
     //   "https://" + rootCid + ".ipfs.w3s.link/" + fileInput.files[0].name;
-
+    // var code = publicdata.code;
     const p = await getPublicInfo(uid);
-    var puid = p.uid;
-    console.log(puid,'hemlu');
-    console.log(publicdata,'public sfsdfszdfsedzgvsdg',privatedata);
+    // var puid = p.uid;
+    // console.log(puid,'hemlu');
+    // console.log(publicdata,'public sfsdfszdfsedzgvsdg',privatedata);
 
-    await addPatient(publicdata, privatedata,"anurag", uid, uuid).then(async()=>{
+    await addPatient(publicdata, privatedata,"code", uid, uuid).then(async()=>{
       await setdoc(uuid,uuid).then(()=>{
         setupdate(!update)
       })
@@ -125,9 +125,9 @@ async function setdoc(id, uid) {
     const handleAddUser = async (e) => {
         e?.preventDefault();
         // console.log(publicdata.profile);
-        const rootCid = await client.put(publicdata.profile);
-         const imageURL =
-      "https://" + rootCid + ".ipfs.w3s.link/" + publicdata.profile[0].name;
+      //   const rootCid = await client.put(publicdata.profile);
+      //    const imageURL =
+      // "https://" + rootCid + ".ipfs.w3s.link/" + publicdata.profile[0].name;
       // console.log(imageURL);
     
         // await setDoc(doc(database, "users", uuid), {
@@ -136,9 +136,9 @@ async function setdoc(id, uid) {
     
         // var name = document.getElementById("name-text").value;
         // var code = document.getElementById("code-text").value;
-        console.log(uid,'water')
+        console.log(publicdata,privatedata);
         var a = await check(uid);
-        console.log('done');
+  
         
         // console.log(a);
         if (a === "") {
@@ -147,29 +147,36 @@ async function setdoc(id, uid) {
           return;
         }
         var tempPdata=publicdata;
-        tempPdata.profile=imageURL;
+        // tempPdata.profile=imageURL;
 
         // const fileInput = data.imageURL;
         // console.log(fileInput.name)
         
         
         // setdata(t);
-        console.log(publicdata)
+        // console.log(publicdata)
         
     
        
           
         
-        await addPatient(tempPdata,privatedata, 'c', uid, uid).then(async()=>{
+        await addPatient(tempPdata,privatedata, "code", uid, uid).then(async()=>{
           await updateDoc(doc(database, "users", user?.sub?.substring(14)), {
             name: publicdata.name,
+            email: publicdata.email,
+            blood:publicdata.bloodgroup
           }).then(()=>{
             setupdate(!update);
             setisread(0);
           }
     
           )
+          toast.success('Patient Added Succesfully')
+        }
+        ).catch((error)=>{
+            toast.error("Error");
         })
+
        
         // setuuid(uid);
       };
@@ -207,7 +214,7 @@ async function setdoc(id, uid) {
             </div>
            
             
-
+              <ToastContainer/>
         </div>
     );
 

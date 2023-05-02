@@ -21,8 +21,8 @@ async function getdoc(docRef) {
     const docSnap = await getDoc(docRef);
     return docSnap;
   }
-function ReadContent({member,muid}){
-    console.log(muid);
+function ReadContent({member,muid,uuid}){
+
     const [imageUrl, setImageUrl] = useState('')
     const {connect,address}=useStateContext();
     const [display,setdisplay] =useState({});
@@ -33,14 +33,11 @@ function ReadContent({member,muid}){
     const { loginWithRedirect ,isAuthenticated,user} = useAuth0();
     const { addPatient,getAllPatients,contract,getPatient,getPublicInfo } = useStateContext();
     const [parray,setparray]=useState([]);
-    const [uid,setuuid]=useState('');
+    const [uid,setuuid]=useState(uuid?uuid:'');
     const [activeStep,setActiveStep]=useState(0);
     useEffect(()=>{
-       if(member){
+       if(!member && !uuid){
         
-        
-}
-else{
     const docRf = doc(database, "users", `${user?.sub?.substring(14)}`);
     getdoc(docRf).then((df)=>{
     //   console.log(df.data());
@@ -52,18 +49,31 @@ else{
     })
     
 }
+else if(!member && uuid){
+
+             
+    const docRf = doc(database, "users", `${uuid}`);
+    getdoc(docRf).then((df)=>{
+    //   console.log(df.data());
+    var id=df?.data()?.uid?df?.data()?.uid:null;
+      setuuid(df?.data()?.uid);
+        if(id){
+        handleFindPublicInfo(id);}
+    })
+}
 
       },[])
       useEffect(()=>{
         if(member===1){
-            setuuid(muid);
+            console.log(muid,'heloooooo');
+            // setuuid(muid);
             handleFindPublicInfo(muid);
         }
 
       },[muid])
     const handleFind = async (e)=>{
         e?.preventDefault();
-        console.log(uid,'dsvsv',code)
+   
         
         const obj=await getPatient(uid,code);
         if(obj===''){
@@ -93,7 +103,7 @@ else{
 
      
    
-
+console.log(user?.sub?.substring(14));
      
 
 

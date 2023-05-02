@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useStateContext } from "../../context/ind";
-import Stepper from "@mui/material/Stepper";
-import Step from "@mui/material/Step";
+
 import StepLabel from "@mui/material/StepLabel";
 import { Web3Storage } from "web3.storage";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -54,7 +53,7 @@ function WriteContent({member,update,setupdate,setisread}) {
   useEffect(() => {
     const docRf = doc(database, "users", `${user?.sub?.substring(14)}`);
     getdoc(docRf).then((df) => {
-      console.log(df.data());
+      
       setuuid(df?.data()?.uid);
     });
   }, []);
@@ -80,7 +79,7 @@ function WriteContent({member,update,setupdate,setisread}) {
   }, [address]);
 
   async function check(uuid) {
-    console.log(uuid);
+   
     const obj = await getPublicInfo(uuid);
     // console.log(obj);
     setdisplay(obj);
@@ -177,8 +176,8 @@ function WriteContent({member,update,setupdate,setisread}) {
   const handleGetMemebers = async () => {
     // var code = document.getElementById("code-text").value;
     const p = await getPublicInfo(uid);
-    console.log(p, "pppppppppppppppppppppppppppppppppppppppp");
-    console.log(uid);
+    
+    
     await getMembers(p.uid).then((res) => {
       // console.log(res.farray,res.patient);
       setparray(res.farray);
@@ -192,7 +191,7 @@ function WriteContent({member,update,setupdate,setisread}) {
     "Create an ad group",
     "Create an ad",
   ];
-  console.log(memberids, "hhemliiiiiiiiiiii");
+
   // var a=document.getElementById('').value;
 
   // const data2={};
@@ -206,8 +205,7 @@ function WriteContent({member,update,setupdate,setisread}) {
       a.imageURL = document.querySelector('input[type="file"]');
       a.email = document.getElementById("email").value;
       a.code=document.getElementById("code").value;
-     
-      console.log(a);
+    
       setdata(a);
     }
     else if(p===1){
@@ -235,7 +233,7 @@ function WriteContent({member,update,setupdate,setisread}) {
       setActiveStep(p + 1);
     }
 
-    console.log(data);
+    
   }
   
   // console.log(document.getElementById('btn-check-outlined')?.value);
@@ -244,7 +242,7 @@ function WriteContent({member,update,setupdate,setisread}) {
   dm.fill(0);
   const [dismap, setDisMap] = useState(dm);
 
-  console.log(data);
+
   function disease(index) {
     var a = data;
     var t = dismap;

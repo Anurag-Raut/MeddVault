@@ -1,7 +1,7 @@
 import React, { useContext, createContext } from 'react';
 import CryptoJS from "crypto-js";
 import crypto from 'crypto-js'
-import { useAddress, useContract, useMetamask, useContractWrite } from '@thirdweb-dev/react';
+import { useAddress, useContract, useMetamask, useContractWrite,useContractRead } from '@thirdweb-dev/react';
 
 
 
@@ -12,11 +12,12 @@ export const StateContextProvider = ({ children }) => {
  
     const address = useAddress();
     const connect = useMetamask();
-    const { contract } = useContract('0x587586E033AC8Bc057D3f3B6814943D8a74DB2aa');
+    const { contract } = useContract('0xc7F3B11500e2c5aF06197dcBe49D049f7022FE1f');
     const { mutateAsync: addPatient } = useContractWrite(contract, 'addPatient');
 
     const { mutateAsync: delPatient } = useContractWrite(contract, 'delPatient');
-  
+    const {  mutateAsync: getpatient } = useContractWrite(contract, "getPatient");
+    const {  mutateAsync: getfamily } = useContractWrite(contract, "getFamilyuid");
 
     const AddPatient=async (publicdata,privatedata,code,puuid,cuuid)=>{
         try{
@@ -26,15 +27,15 @@ export const StateContextProvider = ({ children }) => {
           a.uid=puuid;
           a.code='';
 
-          console.log(publicdata.code,'pleaseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
-
-          console.log(publicdata,privatedata,codee);
+       
          
           // const public_data=data;
           var publicText=JSON.stringify(a)
           var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(privatedata), codee).toString();
-          console.log(ciphertext);
-             await addPatient([ciphertext,publicText,puuid,cuuid])
+          
+             await addPatient({args:[ciphertext,publicText,puuid,cuuid]}).then(()=>{
+    
+             })
 
         }
         catch{
@@ -46,9 +47,9 @@ export const StateContextProvider = ({ children }) => {
 
 
     const getPatient = async(uid,code)=>{
-      const patient = await contract.call('getPatient',uid);
+     const patient=await getpatient({args:[uid]});
       
-      console.log(patient);
+   
       
       
       var bytes  = CryptoJS?.AES?.decrypt(patient.info, code);
@@ -70,17 +71,17 @@ export const StateContextProvider = ({ children }) => {
     }
 
     const getPublicInfo = async(uid)=>{
-      console.log('waterrr',uid)
-      const patient = await contract?.call('getPatient',uid);
-      console.log('bottle')
-      
-      console.log(patient,'bottle patient');
+     console.log(uid);
+     const patient=await getpatient({args:[uid]});
+      // console.log("hello")
+    
       if(!patient){
         return '';
       }
       if(patient?.public_info!==''){
         var a=JSON.parse(patient?.public_info)
-        return a;}
+        return a;
+      }
 
       else{
         return '';
@@ -91,9 +92,9 @@ export const StateContextProvider = ({ children }) => {
 
 
     const getMembers = async(uuid)=>{
-      const patient = await contract.call('getFamilyuid',uuid);
+      const patient = await getfamily({args:[uuid]})
       
-      console.log(patient);
+     
       // var farray=[];
       const farray = await Promise.all(patient.map(async (uid)=>{
       const item =await getPublicInfo(uid);
@@ -110,7 +111,7 @@ export const StateContextProvider = ({ children }) => {
     
     }
     const addReport =async(uuid,code,rdata)=>{
-      console.log('yjgccccccccccccccccccccccccccccccccccccccccccccccccccccccccc');
+      console.log(code,uuid);
       var data= await getPatient(uuid,code);
       if(data===''){
         alert('invalid key')
@@ -125,7 +126,6 @@ export const StateContextProvider = ({ children }) => {
       }
       var public_data=await getPublicInfo(uuid);
       public_data.code=code;
-      console.log(data);
 
 
 
@@ -142,8 +142,8 @@ export const StateContextProvider = ({ children }) => {
 
     const deletePatient=async(uid,code)=>{
       try{
-
-        const patient = await contract.call('getPatient',uid);
+          console.log(uid,code);
+        const patient=await getpatient({args:[uid]});
       
         var bytes  = CryptoJS?.AES?.decrypt(patient.info, code);
       
@@ -152,7 +152,7 @@ export const StateContextProvider = ({ children }) => {
         return '';
       }
       else{
-        await delPatient([uid])
+        await delPatient({args:[uid]})
         return 1;
          }
       

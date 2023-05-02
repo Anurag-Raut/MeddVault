@@ -80,7 +80,6 @@ function LoggedInUser({}) {
   useEffect(() => {
     const docRef = doc(database, "users", `${id}`);
     getdoc(docRef).then((docf) => {
-      console.log(docf);
       if (docf._document) {
         setbool(1);
         setdocref(docf);
@@ -91,7 +90,6 @@ function LoggedInUser({}) {
   useEffect(() => {
     const docRf = doc(database, "users", `${user?.sub?.substring(14)}`);
     getdoc(docRf).then((df) => {
-      console.log(df.data());
       setuuid(df?.data()?.uid);
     });
   }, [user]);
@@ -103,22 +101,22 @@ function LoggedInUser({}) {
       return;
     }
     const obj = await getPublicInfo(uid);
-    console.log(uid, obj, "hemlu");
+
     if (obj === "") {
     } else {
       setisread(0);
     }
   };
   useEffect(() => {
-    console.log(uid);
+   
     handleFindPublicInfo(uid);
   }, [uid]);
   useEffect(() => {
-    console.log(uid);
+
     handleFindPublicInfo(uid);
   }, []);
   useEffect(() => {
-    console.log(uid);
+
     handleFindPublicInfo(uid);
   }, [update]);
   //   console.log(id);

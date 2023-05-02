@@ -62,9 +62,9 @@ function App() {
   }
 
   const [userbool, setuser] = useState(0);
-  console.log(userbool);
+  
   window.addEventListener("hashchange", function () {
-    console.log(window.location.href);
+
     if (window.location.href == "http://localhost:3000") {
       logout();
     }
@@ -118,8 +118,9 @@ function App() {
     },
   };
 
-  console.log(run);
-  useEffect(() => {}, []);
+
+ 
+  // console.log(run);
 
   return (
     <div style={{ width: "100%", height: "100vh" }}>
@@ -143,10 +144,26 @@ function App() {
                   width: "100vw",
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "space-around",
+                 
                 }}
               >
+                <motion.div class='flex m-0 w-[50vw]'
+                  transition={{duration:0.5}}
+                  whileHover={{backgroundColor:"#8eded2"}}
+                  onMouseEnter={() => {
+                    setrun(0);
+                    document.getElementById('med').style.color='white';
+                    // document.getElementById('user-button').classList.add('border-white');
+                    // document.getElementById('user-button').classList.add('hover:text-black');
+                  }}
+                  onMouseLeave={() => {
+                    setrun(1);
+                    document.getElementById('med').style.color='#8eded2';
+                    // document.getElementById('user-button').classList.add('border-white');
+                  }}
+                >
 
+               
                 
                 <motion.div
                   style={{
@@ -157,14 +174,7 @@ function App() {
                     width: "100%",
                     justifyContent: "center",
                   }}
-                  transition={{duration:0.5}}
-                  whileHover={{backgroundColor:"#8eded2"}}
-                  onMouseEnter={() => {
-                    setrun(0);
-                  }}
-                  onMouseLeave={() => {
-                    setrun(1);
-                  }}
+                
                 >
                   <div style={{height:'80vh',display:'flex',flexDirection:'column',justifyContent:'space-between',alignItems:'center'}}>
                   <motion.div animate={{height:run?'350px':'400px',width:run?'350px':'400px'}} >
@@ -178,25 +188,44 @@ function App() {
                   <button
                     style={{ height: "60px" }}
                     type="button"
+                    id="user-button"
                     onClick={() => {
                       loginWithRedirect({
                         appState: {
-                          returnTo: "http://localhost:3000/user",
+                          returnTo: "https://meddvault.netlify.app/user",
                         },
                       });
                     }}
-                    class="btn btn-primary btn-lg"
+                    class="btn hover:bg-white w-[15vw] border-2 border-solid text-black-400 text-3xl font-bold border-black rounded-full"
                   >
-                    Login
+                    User
                   </button>
 
                   </div>
                   
+                </motion.div >
+                <h1 class="text-black text-8xl text-bold mr-1" id='med' style={{marginTop:"7vh",color:'#8eded2',fontWeight:"bold"}}>Med </h1> 
                 </motion.div>
-
+                     
+               
+                    <motion.div class='flex m-0 w-[50vw]'
+                    whileHover={{backgroundColor:"#8eded2"}}
+                    transition={{duration:0.5}}
+                    onMouseEnter={() => {
+                      // setrun(1);
+                      document.getElementById('vault').style.color='white';
+                      
+                    }}
+                    onMouseLeave={() => {
+                      // setrun(0);
+                      document.getElementById('vault').style.color='#8eded2';
+                   
+                    }}
+                    >
+                        <h1 class="text-black text-8xl text-bold ml-1" style={{marginTop:"7vh",color:'#8eded2',fontWeight:'bold'}} id='vault'> Vault </h1> 
+                
                 <motion.div
-                whileHover={{backgroundColor:"#8eded2"}}
-                transition={{duration:0.5}}
+                
                   style={{
                     display: "flex",
                     flexDirection: "column",
@@ -213,21 +242,24 @@ function App() {
 
                   <button
                     style={{ height: "60px" }}
+                    id="admin-button"
                     type="button"
                     onClick={() => {
                       loginWithRedirect({
                         appState: {
-                          returnTo: "http://localhost:3000/admin",
+                          returnTo: "https://meddvault.netlify.app/admin",
                         },
                       });
                     }}
-                    class="btn btn-primary btn-lg"
+                    class="btn hover:bg-white w-[15vw] border-2 border-solid text-black-400 text-3xl font-bold border-black rounded-full"
                   >
                     Admin
                   </button>
 
                   </div>
                   
+                </motion.div>
+              
                 </motion.div>
               </div>
             )
